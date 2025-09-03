@@ -19,7 +19,7 @@ FLASH_RET=$?
 if [ $FLASH_RET -eq 0 ]; then
     echo "=== 刷写成功，重启 Klipper 服务 ==="
     sudo systemctl start klipper
-    echo "完成 ?"
+    echo "完成"
 else
     echo "刷写失败 ?，请检查 flashtool.py 输出日志"
     echo "Klipper 不会自动启动，请手动处理"
