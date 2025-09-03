@@ -9,6 +9,9 @@ FLASHTOOL="/home/klipper/katapult/scripts/flashtool.py"
 echo "=== 停止 Klipper 服务 ==="
 sudo systemctl stop klipper
 
+echo "=== 开始请求引导 ==="
+python3 $FLASHTOOL -d $DEVICE -b $BAUD -f $FIRMWARE -r
+
 echo "=== 开始刷写固件 ==="
 python3 $FLASHTOOL -d $DEVICE -b $BAUD -f $FIRMWARE
 FLASH_RET=$?
