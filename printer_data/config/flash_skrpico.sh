@@ -1,26 +1,27 @@
 #!/bin/bash
-# ×Ô¶¯Í£Ö¹ Klipper -> Ë¢Ğ´¹Ì¼ş -> ÖØÆô Klipper
+# è‡ªåŠ¨åœæ­¢ Klipper -> åˆ·å†™å›ºä»¶ -> é‡å¯ Klipper
 
-DEVICE="/dev/ttyS0"            # ´®¿ÚÉè±¸£¬¸ù¾İĞèÒªĞŞ¸Ä
-BAUD=250000                    # ²¨ÌØÂÊ
-FIRMWARE="~/klipper/out/klipper.bin"   # ¹Ì¼şÂ·¾¶£¬¸ù¾İĞèÒªĞŞ¸Ä
+DEVICE="/dev/ttyS0"            # ä¸²å£è®¾å¤‡ï¼Œæ ¹æ®éœ€è¦ä¿®æ”¹
+BAUD=250000                    # æ³¢ç‰¹ç‡
+FIRMWARE="~/klipper/out/klipper.bin"   # å›ºä»¶è·¯å¾„ï¼Œæ ¹æ®éœ€è¦ä¿®æ”¹
 FLASHTOOL="/home/klipper/katapult/scripts/flashtool.py"
 
-echo "=== Í£Ö¹ Klipper ·şÎñ ==="
+echo "=== åœæ­¢ Klipper æœåŠ¡ ==="
 sudo systemctl stop klipper
 
-echo "=== ¿ªÊ¼ÇëÇóÒıµ¼ ==="
+echo "=== å¼€å§‹è¯·æ±‚å¼•å¯¼ ==="
 python3 $FLASHTOOL -d $DEVICE -b $BAUD -f $FIRMWARE -r
 
-echo "=== ¿ªÊ¼Ë¢Ğ´¹Ì¼ş ==="
+echo "=== å¼€å§‹åˆ·å†™å›ºä»¶ ==="
 python3 $FLASHTOOL -d $DEVICE -b $BAUD -f $FIRMWARE
 FLASH_RET=$?
 
 if [ $FLASH_RET -eq 0 ]; then
-    echo "=== Ë¢Ğ´³É¹¦£¬ÖØÆô Klipper ·şÎñ ==="
+    echo "=== åˆ·å†™æˆåŠŸï¼Œé‡å¯ Klipper æœåŠ¡ ==="
     sudo systemctl start klipper
-    echo "Íê³É ?"
+    echo "å®Œæˆ ?"
 else
-    echo "Ë¢Ğ´Ê§°Ü ?£¬Çë¼ì²é flashtool.py Êä³öÈÕÖ¾"
-    echo "Klipper ²»»á×Ô¶¯Æô¶¯£¬ÇëÊÖ¶¯´¦Àí"
+    echo "åˆ·å†™å¤±è´¥ ?ï¼Œè¯·æ£€æŸ¥ flashtool.py è¾“å‡ºæ—¥å¿—"
+    echo "Klipper ä¸ä¼šè‡ªåŠ¨å¯åŠ¨ï¼Œè¯·æ‰‹åŠ¨å¤„ç†"
 fi
+
