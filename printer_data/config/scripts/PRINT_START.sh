@@ -2,7 +2,7 @@
 
 LOG_FILE="$HOME/print_start_log.txt"
 
-# Ä¬ÈÏÖµ
+# Ä¬ï¿½ï¿½Öµ
 EXTRUDER_TEMP=0
 BED_TEMP=0
 
@@ -18,9 +18,9 @@ for ARG in "$@"; do
 done
 
 echo "$(date) EXTRUDER=$EXTRUDER_TEMP BED=$BED_TEMP" >> "$LOG_FILE"
-echo "¿ªÊ¼¼ÓÈÈÁ÷³Ì EXTRUDER=$EXTRUDER_TEMP BED=$BED_TEMP" >> "$LOG_FILE"
+echo "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ EXTRUDER=$EXTRUDER_TEMP BED=$BED_TEMP" >> "$LOG_FILE"
 
-# ¹¹½¨ G-code ½Å±¾ÄÚÈÝ
+# ï¿½ï¿½ï¿½ï¿½ G-code ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½
 SCRIPT=$(cat <<EOF
 M140 S$BED_TEMP
 M104 S$EXTRUDER_TEMP
@@ -28,15 +28,18 @@ G28
 M190 S$BED_TEMP
 M109 S$EXTRUDER_TEMP
 G92 E0
+
 G1 X8 Y150 Z0.3 F7200
-G1 X8 Y20 E12 F800
+G1 E10 F800
+G1 X8 Y20 E22 F500
+G1 X10 Y0 E34 F500
 EOF
 )
 
-# µ÷ÓÃ Moonraker ½Ó¿ÚÖ´ÐÐ G-code ½Å±¾
+# ï¿½ï¿½ï¿½ï¿½ Moonraker ï¿½Ó¿ï¿½Ö´ï¿½ï¿½ G-code ï¿½Å±ï¿½
 jq -n --arg script "$SCRIPT" '{script: $script}' | \
 curl -s -X POST http://localhost:7125/printer/gcode/script \
   -H "Content-Type: application/json" \
   -d @- >> "$LOG_FILE" 2>&1
 
-echo "´òÓ¡Ç°Á÷³ÌÍê³É" >> "$LOG_FILE"
+echo "ï¿½ï¿½Ó¡Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" >> "$LOG_FILE"
